@@ -77,6 +77,7 @@ class JpegDecoder extends BaseDecoder with SimpleTypeValidator {
         throw Exception('Invalid jpeg file');
       }
 
+      // Check for App1 block
       if (block.type == 0xE1) {
         final app1BlockData = await input.getRange(
           start,
@@ -91,7 +92,6 @@ class JpegDecoder extends BaseDecoder with SimpleTypeValidator {
       if (block.type == 0xC0 || block.type == 0xC2) {
         final widthList = await input.getRange(start + 7, start + 9);
         final heightList = await input.getRange(start + 5, start + 7);
-        orientation = (await input.getRange(start + 9, start + 10))[0];
         return _getSize(widthList, heightList, orientation);
       } else {
         start += block.length;
