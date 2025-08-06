@@ -1,6 +1,7 @@
 # CHANGELOG
 
 - [CHANGELOG](#changelog)
+  - [2.4.1](#241)
   - [2.4.0](#240)
   - [2.3.0+1](#2301)
   - [2.3.0](#230)
@@ -17,6 +18,10 @@
   - [0.2.0](#020)
   - [0.1.1](#011)
   - [0.1.0](#010)
+
+## 2.4.1
+
+- Fix: Corrected orientation retrieval in JPEG images.
 
 ## 2.4.0
 
