@@ -68,6 +68,18 @@ void main() {
       expect(decoder.getSize(input), Size(256, 256));
     });
 
+    test('Test tiff decoder', () {
+      const TiffDecoder decoder = TiffDecoder();
+      
+      // Test decoder properties
+      expect(decoder.decoderName, 'tiff');
+      expect(decoder.supportedExtensions, ['tif', 'tiff']);
+      expect(decoder.isExtensionSupported('tif'), true);
+      expect(decoder.isExtensionSupported('tiff'), true);
+      expect(decoder.isExtensionSupported('TIF'), true);
+      expect(decoder.isExtensionSupported('TIFF'), true);
+    });
+
     test('Test have orientation jpeg', () {
       final orientation3 =
           File('../../example/asset/have_orientation_exif_3.jpg');

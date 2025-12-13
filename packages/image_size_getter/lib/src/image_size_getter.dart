@@ -45,6 +45,7 @@ final _decoders = _DecoderContainer([
   const WebpDecoder(),
   const PngDecoder(),
   const BmpDecoder(),
+  const TiffDecoder(),
 ]);
 
 /// {@template image_size_getter.ImageSizeGetter}
@@ -99,6 +100,13 @@ class ImageSizeGetter {
   /// See also: [JpegDecoder.isValid] or [JpegDecoder.isValidAsync].
   static bool isJpg(ImageInput input) {
     return JpegDecoder().isValid(input);
+  }
+
+  /// Returns the [input] is tiff format or not.
+  ///
+  /// See also: [TiffDecoder.isValid] or [TiffDecoder.isValidAsync].
+  static bool isTiff(ImageInput input) {
+    return TiffDecoder().isValid(input);
   }
 
   /// {@template image_size_getter.getSize}
