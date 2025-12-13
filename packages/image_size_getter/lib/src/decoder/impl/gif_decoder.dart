@@ -60,9 +60,14 @@ class _GifInfo with MutilFileHeaderAndFooter {
   ];
 
   static const end = [0x3B];
+  
+  // Allow GIF files without the standard 0x3B trailer.
+  // Some GIF encoders create valid GIF files without the trailer byte.
+  // We provide both options: with trailer and without (empty list).
+  static const emptyEnd = <int>[];
 
   @override
-  List<List<int>> get mutipleEndBytesList => [end];
+  List<List<int>> get mutipleEndBytesList => [end, emptyEnd];
 
   @override
   List<List<int>> get mutipleStartBytesList => [
