@@ -29,5 +29,35 @@ void main() {
       expect(decoder.isValid(input), isTrue);
       expect(decoder.getSize(input), Size(200, 150));
     });
+    
+    test('Test GIF89a format with and without trailer', () {
+      final gif89a = File('../../example/asset/dialog.gif');
+      
+      const GifDecoder decoder = GifDecoder();
+      final input = FileInput(gif89a);
+      
+      // Standard GIF89a should still work
+      expect(decoder.isValid(input), isTrue);
+      expect(decoder.getSize(input), Size(688, 1326));
+    });
+    
+    test('Test that invalid headers are still rejected', () {
+      // Create a file with invalid header
+      final tempFile = File('../../example/asset/temp_invalid.gif');
+      tempFile.writeAsBytesSync([0x47, 0x49, 0x46, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]);
+      
+      try {
+        const GifDecoder decoder = GifDecoder();
+        final input = FileInput(tempFile);
+        
+        // Invalid GIF header should be rejected
+        expect(decoder.isValid(input), isFalse, 
+          reason: 'File with invalid GIF header should be rejected');
+      } finally {
+        if (tempFile.existsSync()) {
+          tempFile.deleteSync();
+        }
+      }
+    });
   });
 }
