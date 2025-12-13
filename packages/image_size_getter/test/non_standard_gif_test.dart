@@ -42,11 +42,13 @@ void main() {
     });
     
     test('Test that invalid headers are still rejected', () {
-      // Create a file with invalid header
-      final tempFile = File('../../example/asset/temp_invalid.gif');
-      tempFile.writeAsBytesSync([0x47, 0x49, 0x46, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]);
+      // Create a file with invalid header in a temporary directory
+      final tempDir = Directory.systemTemp.createTempSync('gif_test_');
+      final tempFile = File('${tempDir.path}/temp_invalid.gif');
       
       try {
+        tempFile.writeAsBytesSync([0x47, 0x49, 0x46, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]);
+        
         const GifDecoder decoder = GifDecoder();
         final input = FileInput(tempFile);
         
@@ -54,8 +56,9 @@ void main() {
         expect(decoder.isValid(input), isFalse, 
           reason: 'File with invalid GIF header should be rejected');
       } finally {
-        if (tempFile.existsSync()) {
-          tempFile.deleteSync();
+        // Clean up temp directory and all its contents
+        if (tempDir.existsSync()) {
+          tempDir.deleteSync(recursive: true);
         }
       }
     });
