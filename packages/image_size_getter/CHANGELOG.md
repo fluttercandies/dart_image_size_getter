@@ -1,6 +1,7 @@
 # CHANGELOG
 
 - [CHANGELOG](#changelog)
+  - [2.4.2](#242)
   - [2.4.1](#241)
   - [2.4.0](#240)
   - [2.3.0+1](#2301)
@@ -18,6 +19,17 @@
   - [0.2.0](#020)
   - [0.1.1](#011)
   - [0.1.0](#010)
+
+## 2.4.2
+
+Fix:
+
+- PNG validation now checks only the file signature header, not the IEND
+  footer, allowing files with trailing/appended data after IEND to be
+  read correctly ([#28](https://github.com/CaiJingLong/dart_image_size_getter/issues/28)).
+  Note: this means `PngDecoder`/`ImageSizeGetter.isPng` no longer confirm
+  the file ends with a valid IEND chunk — only that it starts with a
+  valid PNG signature.
 
 ## 2.4.1
 
